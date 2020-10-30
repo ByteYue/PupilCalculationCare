@@ -12,14 +12,20 @@ type Ex struct {
 	Ans        string `json:"Answer"`
 }
 
+//	level表示难度即几个运算数，max表示运算数中的最大值,nums表示出多少道题目
+//	前端传回的数据
+type LevelChoose struct {
+	Level 	int	`json:"level"`
+	Max		int	`json:"max"`
+	Nums	int	`json:"nums"`
+}
 
 //首字母大写，则可以被其他的包访问；如果首字母小写，则只能在本包中使用
 
-//	level表示难度即几个运算数，max表示运算数中的最大值,nums表示出多少道题目
-func StartExamine(level int, max int, nums int)  {
+func StartExamine(ch LevelChoose)  {
 	allExpressions:=make([]Ex,0)
-	ExpressionGenerate(level,max,nums,&allExpressions)
-	GenerateWholeJsonExpression(allExpressions)
+	ExpressionGenerate(ch.Level,ch.Max,ch.Nums,&allExpressions)
+	GenerateWholeJsonExpression(0,"",allExpressions)
 }
 
 //	生成满足要求的运算式子,最多四则运算
