@@ -6,6 +6,7 @@
 *.dylib
 *.test
 *.out
+go.sum
 
 webapp/node_modules
 webapp/build

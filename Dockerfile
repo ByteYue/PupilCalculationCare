@@ -1,6 +1,6 @@
 FROM node:12.18.3-alpine3.12 AS JS_BUILD
 COPY webapp /webapp
-WORKDIR webapp
+WORKDIR /webapp
 RUN npm install && npm run build
 
 FROM golang:1.15.1-alpine3.12 AS GO_BUILD
