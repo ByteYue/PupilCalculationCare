@@ -2,9 +2,9 @@ package web
 
 import (
 	"errors"
+	"my-app/model"
 	"net/http"
 	"net/http/httptest"
-	"my-app/model"
 	"testing"
 )
 
