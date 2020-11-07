@@ -26,7 +26,7 @@ need to prepend it with `sudo` depending on your setup):
 docker-compose -f docker-compose-dev.yml up
 ```
 
-This starts a local PostgreSQL database on `localhost:5432`.
+This starts a local MongoDB database on `localhost:27017`.
 The database will be populated with test records from the
 [init-db.sql](init-db.sql) file.
 
