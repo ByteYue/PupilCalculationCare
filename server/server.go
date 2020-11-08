@@ -25,12 +25,25 @@ func main() {
 	log.Println("Error", err)
 }
 
+//生产环境用
+//func clientOptions() *options.ClientOptions {
+//	host := "db"
+//	if os.Getenv("profile") != "prod" {
+//		host = "localhost"
+//	}
+//	return options.Client().ApplyURI(
+//		"mongodb://" + host + ":27017",
+//	)
+//}
+
+//开发环境使用
 func clientOptions() *options.ClientOptions {
-	host := "db"
-	if os.Getenv("profile") != "prod" {
-		host = "localhost"
-	}
+	//host := "db"
+	//if os.Getenv("profile") != "prod" {
+	//	host = "localhost"
+	//}
 	return options.Client().ApplyURI(
-		"mongodb://" + host + ":27017",
+		"mongodb://" + "127.17.0.1" + ":27017",
 	)
+	//mac:"mongodb://"+"host.docker.internal"+":27017"
 }
