@@ -1,6 +1,6 @@
 ```
 .
-├── db                  #MongoDB Communications
+├── db                  #ProgresSql Communications
 │   └── db.go
 ├── Dockerfile          #develop environment deployment
 ├── docs.md             #development document
