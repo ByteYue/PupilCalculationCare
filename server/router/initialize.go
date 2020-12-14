@@ -12,9 +12,7 @@ func Routers() *gin.Engine {
 		//TODO 等前端把资源文件发过来
 	})
 	v1 := Routers.Group("")
-	InitUserRouter(v1)
 	{
-		InitGetRouter(v1)
 		InitUserRouter(v1)
 		//TODO出题,DIY,出分,查看信息
 	}

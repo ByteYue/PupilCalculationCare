@@ -20,3 +20,4 @@ func TestGinSentMessage(t *testing.T) {
 	})
 	r.Run(":8080")
 }
+

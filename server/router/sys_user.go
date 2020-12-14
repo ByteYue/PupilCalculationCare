@@ -10,5 +10,8 @@ func InitUserRouter(Router *gin.RouterGroup) {
 	{
 		UserRouter.POST("login", Login)
 		UserRouter.POST("register", Register)
+		UserRouter.GET("practice", PracticeGenerate)
+		UserRouter.POST("DIY", PracticeDIY)
+		UserRouter.POST("commit", Register)
 	}
 }
