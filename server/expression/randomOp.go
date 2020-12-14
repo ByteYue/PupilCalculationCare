@@ -22,10 +22,10 @@ type LevelChoose struct {
 
 //首字母大写，则可以被其他的包访问；如果首字母小写，则只能在本包中使用
 
-func StartExamine(ch LevelChoose)  {
+func StartExamine(ch LevelChoose) []byte  {
 	allExpressions:=make([]Ex,0)
 	ExpressionGenerate(ch.Level,ch.Max,ch.Nums,&allExpressions)
-	GenerateWholeJsonExpression(0,"",allExpressions)
+	return GenerateWholeJsonExpression(0,"",allExpressions)
 }
 
 //	生成满足要求的运算式子,最多四则运算
