@@ -1,11 +1,10 @@
 package router
 
-import (
+import(
 	"github.com/gin-gonic/gin"
 )
 
-// InitUserRouter
-func InitUserRouter(Router *gin.RouterGroup) {
+func InitGetRouter(Router *gin.RouterGroup) {
 	UserRouter := Router.Group("user")
 	{
 		UserRouter.POST("login", Login)

@@ -1,10 +1,10 @@
 package web
 
 import (
+	"db"
 	"encoding/json"
 	"log"
 	"net/http"
-	"my-app/db"
 )
 
 type App struct {
