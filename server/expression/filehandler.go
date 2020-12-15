@@ -6,8 +6,8 @@ import (
 )
 
 type ExGroup struct {
-	ID  int `json:"id"`
 	Exp Ex  `json:"exp"` //注意要大写才能被外界访问
+	ID  int `json:"id"`
 }
 
 //func Fileprocess() bool {
@@ -45,3 +45,4 @@ func GenerateWholeJsonExpression(times int, name string, allExpression []Ex) []b
 	//fmt.Println(string(bt))
 	//fmt.Print(len(jsons))
 }
+

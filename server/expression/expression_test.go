@@ -28,6 +28,9 @@ func TestGinSentMessage(t *testing.T) {
 	r.GET("/", func(c *gin.Context) {
 		json.Unmarshal(msg, &message)
 		c.JSON(200, message)
+		c.JSON(200, gin.H{
+			"status":"ok",
+		})
 	})
 	r.Run(":8080")
 }

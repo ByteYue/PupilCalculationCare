@@ -10,6 +10,7 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kyleconroy/sqlc v1.6.0 // indirect
 	github.com/lib/pq v1.9.0
+	github.com/spf13/viper v1.7.0
 	github.com/ugorji/go v1.2.1 // indirect
 	go.mongodb.org/mongo-driver v1.4.1
 	go.uber.org/zap v1.15.0
@@ -19,4 +20,4 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-replace db => ./db/db/sqlc
+replace db => ./db/sqlc
