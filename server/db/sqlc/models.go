@@ -11,5 +11,6 @@ type Account struct {
 	Owner     string    `json:"owner"`
 	Message   string    `json:"message"`
 	Mistakes  string    `json:"mistakes"`
+	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"created_at"`
 }

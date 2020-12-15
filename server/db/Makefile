@@ -8,12 +8,18 @@ dropdb:
 	docker exec -it postgres12 dropdb calculation
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/calculation?sslmode=disable" -verbose up
+	migrate -path ./migration -database "postgresql://root:secret@172.17.0.1:5432/calculation?sslmode=disable" -verbose up
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/calculation?sslmode=disable" -verbose down
+	migrate -path ./migration -database "postgresql://root:secret@172.17.0.1:5432/calculation?sslmode=disable" -verbose down
+
+test:
+	go test -v -cover ./...
 
 sqlc:
-	docker run --rm -v /Users/huangjunqidemac/Documents/GitHub/Calculation:/src -w /src kjconroy/sqlc generate
+	docker run --rm -v /Users/huangjunqidemac/go/src/Calculation:/src -w /src kjconroy/sqlc generate
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+server:
+	go run main.go
+
+.PHONY: postgres createdb dropdb migrateup migratedown test sqlc server
