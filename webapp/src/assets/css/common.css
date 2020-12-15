@@ -1,0 +1,393 @@
+/*公共样式--开始*/
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+  margin: 0;
+  padding: 0;
+}
+*{box-sizing: border-box;}
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Microsoft YaHei";
+  color:#b3d3ff;
+  font-size:14px;
+  /*text-align: center;*/
+}
+h1, h2, h3, h4, h5, h6{font-weight:normal;}
+ul,ol {
+  list-style: none;
+}
+
+img {
+  border: none;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+input, textarea {
+  outline: none;
+  border: none;
+}
+
+.table input{
+  color:#b3d3ff;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix:after {
+  content: ".";
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  display: block;
+  clear: both;
+  overflow:hidden;
+}
+
+.fl {
+  float: left
+}
+
+.fr {
+  float: right
+}
+
+.tl {
+  text-align: left;
+}
+
+.tc {
+  text-align: center
+}
+
+.tr {
+  text-align: right;
+}
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.inline{
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+
+.flex-r-s-c{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex-r-s-s{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.flex-r-e-c{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-r-c-c{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.flex-r-b-c{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-r-a-c{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.flex-c-s-c{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex-c-e-c{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-c-c-c{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.flex-c-c-s{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.flex-c-c-e{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.flex-c-b-c{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-c-a-c{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.flex-c-a-s{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+
+
+/*自定义公共样式*/
+
+.head-option{
+  width:100%;
+  height:60px;
+  background-color: #1c2838;
+  color:#b3d3ff;
+  font-size:16px;
+
+
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom:20px;
+}
+.head-option > div{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-right:80px;
+}
+.head-option > div:last-child{
+  margin-right:0;
+}
+.head-option > div > span:nth-of-type(1){
+  margin-right:10px;
+}
+.head-option .control{
+  display: block;
+  width:150px;
+  height:34px;
+  border:1px solid #324866;
+  border-radius: 3px;
+  line-height: 32px;
+  text-align: center;
+  background-color: #17212f;
+}
+.head-option .search{
+  width:80px;
+  height:30px;
+  border-radius: 12px;
+  color:#00b992;
+  border:1px solid #00b992;
+  text-align: center;
+  line-height:28px;
+  cursor:pointer;
+}
+
+/*按钮*/
+.search-btn{
+  width:80px;
+  height:30px;
+  border-radius: 12px;
+  color:#00b992;
+  border:1px solid #00b992;
+  text-align: center;
+  line-height:28px;
+  cursor:pointer;
+}
+
+
+/*普通模块包裹样式*/
+.normal-wrap{
+  width: 100%;
+  background: #17212f;
+  border-radius: 7px;
+  overflow: hidden;
+}
+.normal-wrap .title{
+  width:100%;
+  height:40px;
+  background-color: #1c2838;
+  line-height: 40px;
+  position: relative;
+}
+.title .iconfont{
+  margin: 0 5px 0 15px;
+  font-size: 14px;
+}
+.normal-wrap .content{
+  padding:20px;
+  width:100%;
+}
+
+.export{
+  position:absolute;
+  width:110px;
+  height:30px;
+  top:50%;
+  right:15px;
+  border-radius: 12px;
+  color:#b3d3ff;
+  border:1px solid #324866;
+  line-height:28px;
+  cursor:pointer;
+  transform: translateY(-50%);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.relative{
+  position:relative;
+}
+/*搜索全部计量点样式*/
+.search-all{
+  width: 150px;
+  height: 30px;
+  border-radius: 12px;
+  color: #00b992;
+  border: 1px solid #00b992;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%)
+}
+
+/*分页居中*/
+.pagination{
+  margin-top:20px;
+  text-align: center;
+}
+
+/*日期类型选择样式*/
+.date-type{
+  height:30px;
+  background-color: #1c2838;
+  border:1px solid #324866;
+  border-radius: 3px;
+
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%)
+}
+.date-type span{
+  width:80px;
+  height:28px;
+  line-height:28px;
+  text-align: center;
+  float: left;
+  display: block;
+  cursor:pointer;
+  border-right:1px solid #324866;
+}
+.date-type span:last-child{
+  border-right:none;
+}
+.date-type .isCurrent{
+  background-color: #324866;
+}
+
+/*标题栏more按钮*/
+.title-right-btn{
+  position:absolute;
+  top:50%;
+  right:20px;
+  transform: translateY(-50%)
+}
+
+.text-center{
+  text-align: center;
+}
+
+.color{
+  color:#b3d3ff;
+  color:#ff5050;
+  background-color: #17212f;
+  background-color: #1c2838;
+  border-color:#324866;
+}
+.ml10{
+	margin-left: 10px;
+}
+.mr10{
+	margin-right: 10px;
+}
+.mt10{
+	margin-top: 10px;
+}
+.mb10{
+	margin-bottom: 10px;
+}
+.ml15{
+	margin-left: 15px;
+}
+.mr15{
+	margin-right: 15px;
+}
+.mt15{
+	margin-top: 15px;
+}
+.mb15{
+	margin-bottom: 15px;
+}
+.block{
+	display: block;
+}
