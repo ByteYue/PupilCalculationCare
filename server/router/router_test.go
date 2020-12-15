@@ -15,9 +15,16 @@ func TestGinSentMessage(t *testing.T) {
 	}
 	msg := expression.StartExamine(examlevel)
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
+	r.GET("/practice", func(c *gin.Context) {
 		c.JSON(200, msg)
 	})
 	r.Run(":8080")
 }
 
+func TestSendHtml(t *testing.T) {
+	r := gin.Default()
+	r.GET("", func(c *gin.Context) {
+		c.File("./index.html")
+	})
+	r.Run(":8080")
+}
