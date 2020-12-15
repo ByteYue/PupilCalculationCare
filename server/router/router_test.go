@@ -16,6 +16,9 @@ func TestGinSentMessage(t *testing.T) {
 	msg := expression.StartExamine(examlevel)
 	r := gin.Default()
 	r.GET("/practice", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"work": "done",
+		})
 		c.JSON(200, msg)
 	})
 	r.Run(":8080")
