@@ -83,15 +83,15 @@ export default {
   methods: {
     backToCreate() {
       //页面跳转
-      this.$router.push("/login/create");
+      this.$router.push("/create");
     },
     goToUser() {
       //页面跳转
-      this.$router.push("/login/user");
+      this.$router.push("/user");
     },
     submitAnswer() {
       //提交练习
-      this.$router.push("/login/create/practice/practicecommit");
+      this.$router.push("/commit");
     },
     start() {
       //使用get的数据渲染表格

@@ -122,7 +122,7 @@ export default {
       this.$message.success("登陆成功！");
       //console.log(this.loginForm);
       //页面跳转
-      this.$router.push("/login/create");
+      this.$router.push("/create");
     },
     submitLoginForm() {
       this.$refs.loginFormRef.validate(async (valid) => {
@@ -138,7 +138,7 @@ export default {
         //保存token
         window.sessionStorage.setItem("token", res.data.token);
         //页面跳转
-        this.$router.push("/login/create");
+        this.$router.push("/create");
       });
     },
     resetLoginForm() {

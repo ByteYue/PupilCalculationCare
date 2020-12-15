@@ -3,9 +3,8 @@ import Router from 'vue-router'
 import Login from '@/pages/Login.vue'
 import Create from '@/pages/Create.vue'
 import Test from '@/pages/Test.vue'
-import Test_commit from '@/pages/Test_commit.vue'
 import Practice from '@/pages/Practice.vue'
-import Practice_commit from '@/pages/Practice_commit.vue'
+import Commit from '@/pages/Commit.vue'
 import User from '@/pages/User.vue'
 
 Vue.use(Router)
@@ -23,38 +22,33 @@ export default new Router({
     },
 
     {
-      path: '/login/create',
+      path: '/create',
       name: 'create',
       component: Create
     },
 
     {
-      path: '/login/user',
+      path: '/user',
       name: 'user',
       component: User
     },
 
     {
-      path: '/login/create/test',
+      path: '/test',
       name: 'test',
       component: Test
     },
 
     {
-      path: '/login/create/practice',
+      path: '/practice',
       name: 'practice',
       component: Practice
     },
-    {
-      path: '/login/create/test/testcommit',
-      name: 'testcommit',
-      component: Test_commit
-    },
 
     {
-      path: '/login/create/practice/practicecommit',
-      name: 'practicecommit',
-      component: Practice_commit
+      path: '/commit',
+      name: 'commit',
+      component: Commit
     }
   ]
 })

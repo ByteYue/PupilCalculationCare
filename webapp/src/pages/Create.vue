@@ -93,7 +93,7 @@
               <el-col :span="24">
                 <el-form-item
                   label-width="110px"
-                  label="题目数量"
+                  label="题目数量:"
                   prop="puznum"
                 >
                   <el-select
@@ -148,44 +148,6 @@
         </el-button>
       </div>
       <div class="form2">
-        <!-- 获取测试题 -->
-        <el-form
-          ref="findTestFormRef"
-          :model="findTestFormData"
-          :rules="findTestRules"
-          size="medium"
-          label-width="100px"
-          label-position="left"
-          :key="findTestKey"
-        >
-          <el-col :span="12">
-            <el-form-item
-              size="large"
-              label-width="110px"
-              label="试卷ID:"
-              prop="testID"
-            >
-              <el-input
-                v-model="findTestFormData.testID"
-                placeholder="请输入试卷ID"
-                clearable
-                :style="{ width: '100%' }"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-form>
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          size="medium"
-          style="position: relative"
-          @click="tmpFindTest()"
-        >
-          获取测试题
-        </el-button>
-      </div>
-      <div class="form3">
         <!-- 测试题表单 -->
         <el-form
           ref="createTestFormRef"
@@ -263,7 +225,7 @@
               <el-col :span="24">
                 <el-form-item
                   label-width="110px"
-                  label="题目数量"
+                  label="题目数量:"
                   prop="puznum"
                 >
                   <el-select
@@ -487,28 +449,7 @@ export default {
           label: "0~1000",
           value: 1000,
         },
-        {
-          label: "-100~100",
-          value: -100,
-        },
-        {
-          label: "-1000~1000",
-          value: -1000,
-        },
       ],
-      //ID卷表单数据
-      findTestFormData: {
-        testID: "120938",
-      },
-      findTestRules: {
-        testID: [
-          {
-            required: true,
-            message: "请输入试卷ID",
-            trigger: "blur",
-          },
-        ],
-      },
       //测试卷卷表单数据
       createTestFormData: {
         symbols: [1],
@@ -656,14 +597,6 @@ export default {
           label: "0~1000",
           value: 1000,
         },
-        {
-          label: "-100~100",
-          value: -100,
-        },
-        {
-          label: "-1000~1000",
-          value: -1000,
-        },
       ],
       testtimeOptions: [
         {
@@ -702,14 +635,14 @@ export default {
       //弹出信息
       this.$message.success("生成练习题...");
       //页面跳转
-      this.$router.push("/login/create/practice");
+      this.$router.push("/practice");
     },
     CreatePractice() {
       this.$refs.createPracticeFormRef.validate(async (valid) => {
         if (!valid) return;
         //提交表单,这里需要http
         const { data: res } = await this.$http.post(
-          "/login/create/practice",
+          "/practice",
           this.createPracticeFormData
         );
         if (res.meta.status !== 200) return alert("！");
@@ -717,14 +650,14 @@ export default {
         this.$message.success("生成练习题...");
         console.log(res);
         //页面跳转
-        this.$router.push("/login/create/practice");
+        this.$router.push("/practice");
       });
     },
     tmpCreateTest() {
       //弹出信息
       this.$message.success("生成测试题...");
       //页面跳转
-      this.$router.push("/login/create/test");
+      this.$router.push("/test");
     },
     CreateTest() {
       this.$refs.createTestFormRef.validate(async (valid) => {
@@ -738,28 +671,7 @@ export default {
         //弹出信息
         this.$message.success("生成测试题...");
         //页面跳转
-        this.$router.push("/login/create/test");
-      });
-    },
-    tmpFindTest() {
-      //弹出信息
-      this.$message.success("获取测试题...");
-      //页面跳转
-      this.$router.push("/login/create/test");
-    },
-    tmpFindTest() {
-      this.$refs.findTestFormRef.validate(async (valid) => {
-        if (!valid) return;
-        //提交表单,这里需要http
-        const { data: res } = await this.$http.post(
-          "/api/xxx/xxx",
-          this.findTestFormData
-        );
-        if (res.meta.status !== 200) return alert("！");
-        //弹出信息
-        this.$message.success("获取测试题...");
-        //页面跳转
-        this.$router.push("/login/create/test");
+        this.$router.push("/test");
       });
     },
     submitForm() {
@@ -791,25 +703,18 @@ export default {
   position: absolute;
   margin-top: 5%;
   margin-left: 15%;
-  width: 40%;
+  width: 45%;
 }
 
 .formBox .form2 {
   position: absolute;
   margin-top: 5%;
   margin-left: 60%;
-  width: 40%;
-}
-
-.formBox .form3 {
-  position: absolute;
-  margin-top: 15%;
-  margin-left: 60%;
-  width: 40%;
+  width: 45%;
 }
 
 .formBox button {
-  width: 55%;
+  width: 53%;
   cursor: pointer;
 }
 </style>

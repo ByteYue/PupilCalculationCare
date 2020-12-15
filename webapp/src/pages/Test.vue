@@ -105,11 +105,11 @@ export default {
     },
     backToCreate() {
       //页面跳转
-      this.$router.push("/login/create");
+      this.$router.push("/create");
     },
     goToUser() {
       //页面跳转
-      this.$router.push("/login/user");
+      this.$router.push("/user");
     },
     backDate() {
       // 获取当前时间
@@ -134,7 +134,7 @@ export default {
       }, 1000);
     },
     submitAnswer() {
-      this.$router.push("/login/create/practice/testcommit");
+      this.$router.push("/commit");
     },
   },
 };
