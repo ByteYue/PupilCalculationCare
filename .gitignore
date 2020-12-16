@@ -10,6 +10,5 @@ my-app
 go.sum
 
 webapp/node_modules
-webapp/build
 webapp/npm-debug.log*
 test/json
