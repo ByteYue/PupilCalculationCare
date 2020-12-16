@@ -2,7 +2,6 @@
   <div class="createBox">
     <div class="particles">
       <vue-particles
-        v-show="!(path == '/User')"
         color="#555"
         :particleOpacity="0.2"
         :particlesNumber="100"
@@ -24,7 +23,6 @@
           size="medium"
           label-width="100px"
           label-position="left"
-          :key="createPracticeKey"
         >
           <el-col :span="12">
             <el-row>
@@ -156,7 +154,6 @@
           size="medium"
           label-width="100px"
           label-position="left"
-          :key="createTestKey"
         >
           <el-col :span="12">
             <el-row>

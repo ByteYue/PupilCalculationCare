@@ -19,11 +19,7 @@
 <script>
 export default {
   data: {
-    user: [
-      { id: 1, name: "2+8=" },
-      { id: 2, name: "1+2=" },
-      { id: 3, name: "5+9=" },
-    ],
+    user: [],
   },
   methods: {
     backToCreate() {

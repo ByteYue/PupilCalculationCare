@@ -99,8 +99,8 @@ export default {
         },
         {
           id: 3,
-          Expression: "3+15+18+5",
-          Answer: "41",
+          Expression: "8*7+27",
+          Answer: "83",
           Judge: "",
           Point: 0,
         },
@@ -181,13 +181,12 @@ export default {
       //展现结果
       this.ColShow();
       //传送数据
-      this.$refs.expressions.validate(async (valid) => {
-        if (!valid) return;
-        //提交表单,这里需要http
-        const { data: res } = await this.$http.post(
-          "/commit",
-          this.expressions
-        );
+      this.$http({
+        url: "/commit",
+        method: "post",
+        data: this.expressions,
+      }).then((res) => {
+        console.log(res.data);
         if (res.meta.status !== 200) return alert("提交数据错误！");
         //弹出信息
         this.$message.success("提交成功");
@@ -198,13 +197,11 @@ export default {
     },
     async start() {
       //用get获取数据
-      /*
       const { data: res } = await this.$http.get("expressions");
       if (res.meta.status !== 200)
         return this.$message.error("获取题目数据时出现错误!");
       this.expressions = res.data;
       console.log(res);
-      */
       //渲染表格
       console.log(this.expressions);
     },

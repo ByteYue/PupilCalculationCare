@@ -64,13 +64,7 @@
         </div>
       </el-main>
     </el-main>
-    <div class="footer">
-      <div class="word">
-        芜湖！你得到了
-        <p id="score">90</p>
-        分！
-      </div>
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
