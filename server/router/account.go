@@ -8,11 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//createAccountRequest JSON
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
+//CreateAccount 创建account
 func (server *Server) CreateAccount(ctx *gin.Context) {
 	var req createAccountRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -36,11 +38,13 @@ func (server *Server) CreateAccount(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, account)
 }
 
+//getAccountRequest JSON
 type getAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
+//LogIn handle login
 func (server *Server) LogIn(ctx *gin.Context) {
 	var req getAccountRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -64,6 +68,7 @@ func (server *Server) LogIn(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, account)
 }
 
+//Register handle register
 func (server *Server) Register(ctx *gin.Context) {
 	var req getAccountRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -97,4 +102,10 @@ func (server *Server) Register(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, account)
+}
+
+//Getfilename gername
+func (server *Server) Getfilename(owner string, ctx *gin.Context) string {
+	account, _ := server.queries.GetAccount(ctx, owner)
+	return account.Mistakes
 }

@@ -6,11 +6,11 @@ import "my-app/stack"
 func priority(op string) int {
 	if op == "+" || op == "-" {
 		return 0
-	} else {
-		return 1
 	}
+	return 1
 }
 
+// CheckAns check the expression
 func CheckAns(operands []int, operators []string, max int) (int, bool) {
 	var operandsStack stack.Stack
 	var operatorsStack stack.Stack
@@ -48,9 +48,8 @@ func CheckAns(operands []int, operators []string, max int) (int, bool) {
 	ans := operandsStack.Pop().(int)
 	if ans >= 0 && ans <= max {
 		return ans, true
-	} else {
-		return 0, false
 	}
+	return 0, false
 }
 
 //计算答案

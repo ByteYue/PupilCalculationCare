@@ -1,12 +1,20 @@
 package request
 
 //User register structrue
-type Register struct {
-	Username string `json:"Username"`
-	Password string `json:"Password"`
+type CommitMessage struct {
+	Owner      string `json:"owner"`
+	Expression []Item `json:"expression"`
 }
 
-type Login struct {
-	Username string `json:"Username"`
-	Password string `json:"Username"`
+type Item struct {
+	Exp string `json:"exp"`
+}
+
+//ItemToString 将[]Item变为[]string
+func ItemToString(e *[]Item) []string {
+	exps := make([]string, len(*e))
+	for index, elem := range *e {
+		exps[index] = elem.Exp
+	}
+	return exps
 }

@@ -51,24 +51,27 @@ LevelChoose
 commit
 {
     "owner":"name"
-    "expressions":[]
+        "expressions":[
+        {
+            "exp":"1+2+3"
+        },
+        {
+            "exp":"2+3+4"
+        }
+    ]
 }
 
 expressions
 {
-    "expressions":[
-        [
+    "expressions":{
         {
-            "exp":{
-                "Answer":"66",
-                "Expression":"1+2+3",
-                "id":0
-            }
+            "Expression":"11+11",
+            "Answer":"22"
+        },
+        {
+            "Expression":"1+2+3",
+            "Answer":"6"
         }
-        ],
-        [
-
-        ]
-    ]
+    }
 }
 ```
