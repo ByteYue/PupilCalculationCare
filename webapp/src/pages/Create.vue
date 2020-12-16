@@ -142,7 +142,7 @@
           icon="el-icon-reading"
           size="medium"
           style="position: relative"
-          @click="tmpCreatePractice()"
+          @click="CreatePractice()"
         >
           确认生成练习题
         </el-button>
@@ -303,7 +303,7 @@
           icon="el-icon-receiving"
           size="medium"
           style="position: relative"
-          @click="tmpCreateTest()"
+          @click="CreateTest()"
         >
           确认生成测试题
         </el-button>
@@ -323,8 +323,8 @@ export default {
         symbol: [1],
         dnum: 2,
         dsize: 10,
-        puznum: 20,
-        anssize: 100, //debug负范围去掉
+        puznum: 10,
+        anssize: 10,
       },
       createPracticeRules: {
         symbol: [
@@ -455,10 +455,10 @@ export default {
         symbols: [1],
         dnum: 2,
         dsize: 10,
-        puznum: 20,
-        anssize: 100,
-        testtime: 10,
-        testname: "测试卷1",
+        puznum: 10,
+        anssize: 10,
+        testtime: 5,
+        testname: "测试卷",
       },
       createTestRules: {
         symbols: [
@@ -631,12 +631,6 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    tmpCreatePractice() {
-      //弹出信息
-      this.$message.success("生成练习题...");
-      //页面跳转
-      this.$router.push("/practice");
-    },
     CreatePractice() {
       this.$refs.createPracticeFormRef.validate(async (valid) => {
         if (!valid) return;
@@ -645,7 +639,7 @@ export default {
           "/practice",
           this.createPracticeFormData
         );
-        if (res.meta.status !== 200) return alert("！");
+        if (res.meta.status !== 200) return alert("生成错误！");
 
         this.$message.success("生成练习题...");
         console.log(res);
@@ -653,23 +647,25 @@ export default {
         this.$router.push("/practice");
       });
     },
-    tmpCreateTest() {
-      //弹出信息
-      this.$message.success("生成测试题...");
-      //页面跳转
-      this.$router.push("/test");
-    },
     CreateTest() {
       this.$refs.createTestFormRef.validate(async (valid) => {
         if (!valid) return;
         //提交表单,这里需要http
         const { data: res } = await this.$http.post(
-          "/api/xxx/xxx",
+          "/test",
           this.createTestFormData
         );
-        if (res.meta.status !== 200) return alert("！");
+        if (res.meta.status !== 200) return alert("生成错误！");
         //弹出信息
         this.$message.success("生成测试题...");
+        window.sessionStorage.setItem(
+          "testtime",
+          this.createTestFormData.testtime
+        );
+        window.sessionStorage.setItem(
+          "testname",
+          this.createTestFormData.testname
+        );
         //页面跳转
         this.$router.push("/test");
       });

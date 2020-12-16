@@ -15,18 +15,14 @@
     <!--练习题目-->
     <el-main class="main">
       <div class="pheader">
-        <el-button @click="start()">开始答题</el-button>
-        <div class="testname">
-          <div id="testName">练习题</div>
-        </div>
+        <div class="testname">练习题</div>
       </div>
       <div class="puzzles">
-        <el-table
-          :data="puzzleData"
-          style="width: 100%"
-          :row-class-name="puzzleRow"
-        >
+        <el-table :data="expressions" style="width: 100%">
           <el-table-column prop="id" width="200" align="right" label="序号">
+            <template slot-scope="scope">
+              <span v-if="scope.row.id">{{ scope.row.id }}</span>
+            </template>
           </el-table-column>
           <el-table-column
             prop="Expression"
@@ -36,18 +32,37 @@
           >
           </el-table-column>
           <el-table-column prop="Input" width="100" align="center" label="输入">
-            <el-input></el-input
-          ></el-table-column>
+            <template slot-scope="scope">
+              <el-input
+                v-model="scope.row.Input"
+                :data-price="scope.row.result"
+                type="text"
+              ></el-input>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="Answer"
             width="200"
             align="center"
             label="答案"
+            v-if="show"
           >
           </el-table-column>
-          <el-table-column prop="Judge" width="200" align="center" label="对错">
+          <el-table-column
+            prop="Judge"
+            width="200"
+            align="center"
+            label="对错"
+            v-if="show"
+          >
           </el-table-column>
-          <el-table-column prop="Point" width="100" align="center" label="得分">
+          <el-table-column
+            prop="Point"
+            width="100"
+            align="center"
+            label="得分"
+            v-if="show"
+          >
           </el-table-column>
         </el-table>
       </div>
@@ -60,25 +75,89 @@
 
 <script>
 export default {
+  props: [],
   data() {
     return {
-      puzzleData: [
+      show: false,
+      lastPoint: 100,
+      //练习题数据
+
+      expressions: [
         {
           id: 1,
-          Expression: "400-5+8",
-          Answer: "403",
-          Judge: "√",
-          Point: 2,
+          Expression: "2+8+8+20",
+          Answer: "38",
+          Judge: "",
+          Point: 0,
         },
         {
           id: 2,
-          Expression: "40*7+9",
-          Answer: "289",
-          Judge: "X",
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 3,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 4,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 5,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 6,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 7,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 8,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 9,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 10,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
           Point: 0,
         },
       ],
     };
+  },
+  created() {
+    this.start();
   },
   methods: {
     backToCreate() {
@@ -91,39 +170,59 @@ export default {
     },
     submitAnswer() {
       //提交练习
-      this.$router.push("/commit");
+      //this.$router.push("/commit");
+      var tablelength = this.expressions.length;
+      var rightNum = 0;
+      for (var i = 0; i < tablelength; i++) {
+        this.compareAnswer(i);
+        if (this.expressions[i].Judge === "√") rightNum++;
+      }
+      this.lastPoint = (this.lastPoint * rightNum) / tablelength;
+      //展现结果
+      this.ColShow();
+      //传送数据
+      this.$refs.expressions.validate(async (valid) => {
+        if (!valid) return;
+        //提交表单,这里需要http
+        const { data: res } = await this.$http.post(
+          "/commit",
+          this.expressions
+        );
+        if (res.meta.status !== 200) return alert("提交数据错误！");
+        //弹出信息
+        this.$message.success("提交成功");
+      });
     },
-    start() {
-      //使用get的数据渲染表格
+    ColShow() {
+      this.show = true;
+    },
+    async start() {
+      //用get获取数据
       /*
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "", true);
-      xhr.onload = function () {
-        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-          var data = xhr.responseText;
-          var p = JSON.parse(data);
-          var table_node = document.getElementById("table");
-          // 创建 tbody节点
-          var tbody_node = document.createElement("tbody");
-          // 将 tbody 节点插入到表格中
-          table_node.appendChild(tbody_node);
-          for (var key in person) {
-            // 循环插入所有的行到 tbody 中
-            tbody_node.insertRow(key);
-            person[key].gender = person[key].gender == 1 ? "男" : "女";
-            for (var attribute in person[key]) {
-              //  在tbody中的行中插入一个单元格
-              var td_node = tbody_node.rows[key].insertCell(-1);
-              // 创建一个文本节点
-              var text_node = document.createTextNode(person[key][attribute]);
-              // console.log(attribute.gender);
-              td_node.appendChild(text_node);
-            }
-          }
-        } else {
-          alert("Request was unsuccessful :" + xhr.status);
-          console.log(xhr.statusText);
-        }*/
+      const { data: res } = await this.$http.get("expressions");
+      if (res.meta.status !== 200)
+        return this.$message.error("获取题目数据时出现错误!");
+      this.expressions = res.data;
+      console.log(res);
+      */
+      //渲染表格
+      console.log(this.expressions);
+    },
+    compareAnswer(index) {
+      console.log("compare Answer");
+      var tablelength = this.expressions.length;
+      let tmpobj = this.expressions[index];
+      let ans = tmpobj.Answer;
+      let res = tmpobj.Input;
+      if (ans === res) {
+        tmpobj.Judge = "√";
+        tmpobj.Point = (100 / tablelength).toFixed(1);
+        this.$set(this.expressions, index, tmpobj);
+      } else {
+        tmpobj.Judge = "×";
+        tmpobj.Point = 0;
+        this.$set(this.expressions, index, tmpobj);
+      }
     },
   },
 };
@@ -169,18 +268,21 @@ export default {
 }
 
 .pheader .testname {
-  font-size: 4ex;
+  font-size: 30px;
   display: flex;
   position: absolute;
-  left: 50%;
+  left: 30rem;
+  top: 60px;
   width: 100%;
 }
-.main #puzzles {
+
+.main .puzzles {
+  margin-top: 30px;
+  margin-left: 0;
   color: black;
   width: 100%;
 }
 .main .puzzle {
-  margin: 5px;
   width: 100%;
   display: flex;
 }

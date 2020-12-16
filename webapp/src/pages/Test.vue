@@ -12,96 +12,205 @@
         <img src="../assets/img/头像.jpg" alt="头像" @click="goToUser()" />
       </div>
     </el-header>
+    <!--练习题目-->
     <el-main class="main">
       <div class="pheader">
-        <el-button @click="start()">开始答题</el-button>
-        <!-- 计时器 -->
-        <div class="timer">
-          剩余时间：
-          <div id="testTime">00:00</div>
-        </div>
+        <div class="timer">{{ min }}:{{ sec }}</div>
         <div class="testname">
-          <div id="testName">测试卷一</div>
-        </div>
-        <div class="testid">
-          id:
-          <div id="testId"></div>
+          <div id="testName">测试卷</div>
         </div>
       </div>
-      <!-- 测试题 -->
       <div class="puzzles">
-        <el-table
-          id="puzzleTable"
-          :data="puzzleData"
-          style="width: 100%"
-          :row-class-name="puzzleRow"
-        >
-          <el-table-column prop="id" width="100" label="序号">
+        <el-table :data="expressions" style="width: 100%">
+          <el-table-column prop="id" width="200" align="right" label="序号">
+            <template slot-scope="scope">
+              <span v-if="scope.row.id">{{ scope.row.id }}</span>
+            </template>
           </el-table-column>
-          <el-table-column prop="expression" width="300" label="题目">
+          <el-table-column
+            prop="Expression"
+            width="200"
+            align="center"
+            label="题目"
+          >
           </el-table-column>
-          <el-table-column prop="input" label="输入"> </el-table-column>
-          <el-table-column prop="answer" label="答案"> </el-table-column>
-          <el-table-column prop="judge" label="对错"> </el-table-column>
-          <el-table-column width="400px"> </el-table-column>
+          <el-table-column prop="Input" width="100" align="center" label="输入">
+            <template slot-scope="scope">
+              <el-input
+                v-model="scope.row.Input"
+                :data-price="scope.row.result"
+                type="text"
+              ></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="Answer"
+            width="200"
+            align="center"
+            label="答案"
+            v-if="show"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="Judge"
+            width="200"
+            align="center"
+            label="对错"
+            v-if="show"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="Point"
+            width="100"
+            align="center"
+            label="得分"
+            v-if="show"
+          >
+          </el-table-column>
         </el-table>
       </div>
     </el-main>
     <el-footer class="footer">
       <el-button @click="submitAnswer()">提交</el-button>
     </el-footer>
+    <div class="points" v-if="show">
+      <img src="../assets/img/成绩单.png" alt="" />
+      <div class="word">
+        <div v-if="lastPoint === 100">恭喜你拿了满分！你真是个小天才！</div>
+        <div v-else-if="lastPoint > 90">你做的非常棒！小心不要粗心哦~</div>
+        <div v-else-if="lastPoint > 80">还差一点点，加油！</div>
+        <div v-else-if="lastPoint > 60">多多练习，你会更棒的！</div>
+        <div v-else>脚踏实地，选择低一点的难度重新开始吧！</div>
+      </div>
+      <div class="score">
+        {{ lastPoint }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: [],
   data() {
     return {
-      testTime: {
-        min: 5,
-        sec: 0,
-        now: "",
-        end: "",
-      },
+      show: false,
+      lastPoint: 100,
+      end: undefined,
+      now: undefined,
+      min: 5,
+      sec: 0,
+      //练习题数据
+
+      expressions: [
+        {
+          id: 1,
+          Expression: "2+8+8+20",
+          Answer: "38",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 2,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 3,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 4,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 5,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 6,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 7,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 8,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 9,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+        {
+          id: 10,
+          Expression: "3+15+18+5",
+          Answer: "41",
+          Judge: "",
+          Point: 0,
+        },
+      ],
     };
   },
+  created() {
+    this.start();
+    this.timerStart();
+  },
   methods: {
-    start() {
-      //定义结束时间戳
-      //我这里300000是5分钟倒计时，在当前时间戳的基础上加了300000毫秒
-      this.end = new Date().getTime + 300000;
-      //调用倒计时方法
-      this.backDate();
-      //使用get的数据渲染表格
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "", true);
-      xhr.onload = function () {
-        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-          var data = xhr.responseText;
-          var p = JSON.parse(data);
-          var table_node = document.getElementById("table");
-          // 创建 tbody节点
-          var tbody_node = document.createElement("tbody");
-          // 将 tbody 节点插入到表格中
-          table_node.appendChild(tbody_node);
-          for (var key in person) {
-            // 循环插入所有的行到 tbody 中
-            tbody_node.insertRow(key);
-            person[key].gender = person[key].gender == 1 ? "男" : "女";
-            for (var attribute in person[key]) {
-              //  在tbody中的行中插入一个单元格
-              var td_node = tbody_node.rows[key].insertCell(-1);
-              // 创建一个文本节点
-              var text_node = document.createTextNode(person[key][attribute]);
-              // console.log(attribute.gender);
-              td_node.appendChild(text_node);
-            }
-          }
-        } else {
-          alert("Request was unsuccessful :" + xhr.status);
-          console.log(xhr.statusText);
-        }
-      };
+    timerStart() {
+      //*this.min = JSON.parse(sessionStorage.getItem("testtime"));
+      // 当前时间戳
+      this.now = Date.parse(new Date());
+      // 目标日期时间戳
+      this.end = this.now + this.min * 60 * 1000 + this.sec * 1000;
+      this.countTime();
+      return;
+    },
+    countTime() {
+      if (this.min === 0 && this.sec === 0) {
+        this.submitAnswer();
+        return;
+      }
+      // 当前时间戳
+      this.now = Date.parse(new Date());
+      // 相差的毫秒数
+      var msec = this.end - this.now;
+      // 计算分秒数
+      this.min = parseInt((msec / 60 / 1000) % 60);
+      this.sec = parseInt((msec / 1000) % 60);
+      // 个位数前补零
+      this.min = this.min > 9 ? this.min : "0" + this.min;
+      this.sec = this.sec > 9 ? this.sec : "0" + this.sec;
+      // 控制台打印
+      //console.log(`${this.min}分钟 ${this.sec}秒`);
+      // **错误记录：一秒后递归(这里的this指向指的windows)
+      setTimeout(() => {
+        this.countTime();
+      }, 1000);
     },
     backToCreate() {
       //页面跳转
@@ -111,30 +220,61 @@ export default {
       //页面跳转
       this.$router.push("/user");
     },
-    backDate() {
-      // 获取当前时间
-      this.now = new Date().getTime();
-      if (this.now >= this.end) {
-        this.min = 0;
-        this.sec = 0;
-        this.submitAnswer();
-        return;
-      }
-      // 用结束时间戳减去当前时间
-      const msec = this.end - this.now;
-      let min = parseInt(msec / 1000 / 60); //算出分钟数
-      let sec = parseInt((msec / 1000) % 60); //算出秒数
-      // 给数据赋值
-      this.min = min > 9 ? min : "0" + min;
-      this.sec = sec > 9 ? sec : "0" + sec;
-
-      // 使用定时器 然后使用递归 让每一次函数能调用自己达到倒计时效果
-      setTimeout(function () {
-        this.BackDate();
-      }, 1000);
-    },
     submitAnswer() {
-      this.$router.push("/commit");
+      //提交练习
+      //this.$router.push("/commit");
+      var tablelength = this.expressions.length;
+      var rightNum = 0;
+      for (var i = 0; i < tablelength; i++) {
+        this.compareAnswer(i);
+        if (this.expressions[i].Judge === "√") rightNum++;
+      }
+      this.lastPoint = (this.lastPoint * rightNum) / tablelength;
+      //展现成绩单
+      this.ColShow();
+      //传送数据
+      this.$refs.expressions.validate(async (valid) => {
+        if (!valid) return;
+        //提交表单,这里需要http
+        const { data: res } = await this.$http.post(
+          "/commit",
+          this.expressions
+        );
+        if (res.meta.status !== 200) return alert("提交数据错误！");
+        //弹出信息
+        this.$message.success("提交成功");
+      });
+    },
+    ColShow() {
+      this.show = true;
+    },
+    async start() {
+      //用get获取数据
+      /*
+      const { data: res } = await this.$http.get("expressions");
+      if (res.meta.status !== 200)
+        return this.$message.error("获取题目数据时出现错误!");
+      this.expressions = res.data;
+      console.log(res);
+      */
+      //渲染表格
+      console.log(this.expressions);
+    },
+    compareAnswer(index) {
+      console.log("compare Answer");
+      var tablelength = this.expressions.length;
+      let tmpobj = this.expressions[index];
+      let ans = tmpobj.Answer;
+      let res = tmpobj.Input;
+      if (ans === res) {
+        tmpobj.Judge = "√";
+        tmpobj.Point = (100 / tablelength).toFixed(1);
+        this.$set(this.expressions, index, tmpobj);
+      } else {
+        tmpobj.Judge = "×";
+        tmpobj.Point = 0;
+        this.$set(this.expressions, index, tmpobj);
+      }
     },
   },
 };
@@ -179,25 +319,34 @@ export default {
   color: black;
 }
 
-.pheader .timer {
-  position: absolute;
-  left: 30%;
-  color: red;
-}
-
 .pheader .testname {
-  font-size: 4ex;
+  font-size: 30px;
   display: flex;
   position: absolute;
-  left: 50%;
+  left: 30rem;
+  top: 60px;
   width: 100%;
 }
 
-.pheader .testid {
-  margin-left: 100px;
+.main .puzzles {
+  margin-top: 30px;
+  margin-left: 0;
+  color: black;
+  width: 100%;
+}
+.main .puzzle {
+  width: 100%;
+  display: flex;
+}
+
+.timer {
   position: absolute;
-  left: 70%;
-  top: 100px;
+  z-index: 1;
+  color: red;
+  font-size: 20px;
+}
+.puzzles textarea {
+  width: 100px;
 }
 
 .footer {
@@ -207,6 +356,49 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.points {
+  background-color: rgb(255, 255, 255);
+  color: #000;
+  border: 1px solid rgb(51, 48, 48);
+  height: 150px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../assets/img/成绩单背景.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.points .word {
+  position: absolute;
+  font-size: 18px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+}
+
+.points img {
+  position: absolute;
+  width: 280px;
+  height: 100%;
+  left: 10%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.points .score {
+  color: red;
+  font-style: oblique;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .footer button {
