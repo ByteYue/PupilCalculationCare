@@ -2,6 +2,7 @@ package router
 
 import (
 	"db"
+	"my-app/middleware"
 	request "my-app/model/request"
 	"strings"
 
@@ -19,13 +20,16 @@ func NewServer(queries *db.Queries) *Server {
 	server := &Server{queries: queries}
 
 	router := gin.Default()
-
-	router.GET("/", func(c *gin.Context) {
-		//将首页HTML传给CLIENT
-		//TODO 等前端把资源文件发过来
-	})
+	//config := cors.DefaultConfig()
+	router.Use(middleware.Cors())
+	//router.GET("/", func(c *gin.Context) {
+	//将首页HTML传给CLIENT
+	//TODO 等前端把资源文件发过来
+	//})
 	//router.POST("./accounts", server.CreateAccount)
-	router.GET("/login", server.LogIn)
+	//router.Use(middleware())
+
+	router.POST("/login", server.Register)
 	router.GET("/practice", PracticeGenerate)
 	router.GET("/test", PracticeGenerate)
 	router.POST("/create", PracticeDIY)
