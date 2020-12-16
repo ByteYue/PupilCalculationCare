@@ -20,7 +20,7 @@ func PracticeGenerate(c *gin.Context) {
 //PracticeDIY 生成DIY给client
 func PracticeDIY(c *gin.Context) {
 	var ch expression.LevelChoose
-	if c.ShouldBind(&ch) == nil {
+	if c.ShouldBindJSON(&ch) != nil {
 
 	}
 	msg := expression.StartExamine(ch, true)
@@ -30,6 +30,3 @@ func PracticeDIY(c *gin.Context) {
 //CommitHandler wait
 //TODO 给QIQI了
 //TODO 和pzc确定Commit返回什么数据
-func CommitHandler(c *gin.Context) {
-
-}

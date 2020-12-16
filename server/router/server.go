@@ -2,6 +2,7 @@ package router
 
 import (
 	"db"
+	request "my-app/model/request"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -28,7 +29,14 @@ func NewServer(queries *db.Queries) *Server {
 	router.GET("/practice", PracticeGenerate)
 	router.GET("/test", PracticeGenerate)
 	router.POST("/create", PracticeDIY)
-	router.POST("/commit", CommitHandler)
+	router.POST("/commit", func(c *gin.Context) {
+		var ch request.CommitMessage
+		if c.ShouldBindJSON(&ch) != nil {
+			c.JSON(400, nil)
+		}
+		name := server.Getfilename(ch.Owner, c)
+		//TODO  邱邱人写文件操作
+	})
 	server.router = router
 	return server
 }

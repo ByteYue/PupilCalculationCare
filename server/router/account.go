@@ -103,3 +103,8 @@ func (server *Server) Register(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, account)
 }
+
+func (server *Server) Getfilename(owner string, ctx *gin.Context) string {
+	account, _ := server.queries.GetAccount(ctx, owner)
+	return account.Mistakes
+}

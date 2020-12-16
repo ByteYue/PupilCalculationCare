@@ -1,10 +1,28 @@
 package expression
 
 import (
+	"log"
+	request "my-app/model/request"
 	"testing"
 
 	"github.com/gin-gonic/gin"
 )
+
+func TestCommitTrans(t *testing.T) {
+	var datafromfront request.CommitMessage
+	r := gin.Default()
+	r.POST("/commit", func(c *gin.Context) {
+		if c.ShouldBindJSON(&datafromfront) == nil {
+			log.Println(datafromfront.Expression)
+			log.Println(datafromfront.Owner)
+			c.JSON(200,gin.H{
+				"status":"GOT",
+			})
+		}
+		log.Println("Done")
+	})
+	r.Run(":8080")
+}
 
 func TestGenerateJSONToFront(t *testing.T) {
 	var transdata ExJSON

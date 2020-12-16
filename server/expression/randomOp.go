@@ -8,8 +8,11 @@ import (
 
 //Ex the expression send to the front
 type Ex struct {
+	ID         int    `json:"id"`
 	Expression string `json:"Expression"`
 	Ans        string `json:"Answer"`
+	Judge      string `json:"Judge"`
+	Point      int    `json:"Point"`
 }
 
 //LevelChoose level表示难度即几个运算数，max表示运算数中的最大值,nums表示出多少道题目
@@ -56,22 +59,24 @@ func symbolToOp(op int8) string {
 func ExpressionGenerate(level int, max int, nums int, allExpressions *[]Ex, ops *string) {
 	//:=make([]Ex,nums)
 	//var allExpressions	[]Ex
-	for ; nums > 0; nums-- {
+	for index := 1; index <= nums; index++ {
 		//Operands:=make([]int,0)
 		//Operators:=make([]string,0)
 		//var temp Ex
 		var Operands, Operators, ans = Expression(level, max, ops)
 		//var Operands,Operators,ans = Expression(level, max, &Operands, &Operators)
-		temp := GetExStruct(Operands, Operators, ans)
+		temp := GetExStruct(Operands, Operators, ans, index)
 		*allExpressions = append(*allExpressions, temp)
 	}
 }
 
 //GetExStruct 返回Ex结构体
-func GetExStruct(operands []int, operators []string, ans int) Ex {
+func GetExStruct(operands []int, operators []string, ans int, ID int) Ex {
 	var exp Ex
+	exp.ID = ID
 	exp.Expression = ExpToString(operands, operators)
 	exp.Ans = strconv.Itoa(ans)
+	exp.Point = 0
 	return exp
 	//return &exp
 }
@@ -139,6 +144,7 @@ func Operator(operators *string) string {
 //OperatorSpecial 自定义题目难度时使用
 //	由前端发回的json中的symbol数组确认str的值
 func OperatorSpecial(str *string) string {
+	//rand.Seed(time.Now().Unix())
 	rand.New(rand.NewSource(time.Now().UnixNano()))
 	return string((*str)[rand.Intn(4)])
 }
