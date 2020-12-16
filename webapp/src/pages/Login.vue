@@ -142,10 +142,7 @@ export default {
         //提交表单,这里需要http
         //const result = this.$http.post("/create", this.loginForm);
         //console.log(result);
-        const { data: res } = await this.$http.post(
-          "/login",
-          this.$qs.stringify(this.loginForm)
-        );
+        const { data: res } = await this.$http.post("/login", this.loginForm);
         console.log(res);
 
         if (res.meta.status !== 200) return alert("登录失败！");
