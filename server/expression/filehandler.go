@@ -11,16 +11,8 @@ type ExJSON struct {
 	Expressions []Ex `json:"expressions"`
 }
 
-//func Fileprocess() bool {
-//
-//}
-
-//func saveFile(data []byte,) bool {
-//	var name string//准备用用户名和第几次使用生成文件名
-//}
-
 //GenerateJSONToFront 生成运算式的json给前端
-func GenerateJSONToFront(times int, name string, allExpression []Ex) ExJSON {
+func GenerateJSONToFront(allExpression []Ex) ExJSON {
 	var transdata ExJSON
 	transdata.Expressions = allExpression
 	return transdata

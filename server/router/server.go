@@ -35,7 +35,9 @@ func NewServer(queries *db.Queries) *Server {
 			c.JSON(400, nil)
 		}
 		name := server.Getfilename(ch.Owner, c)
+		exps := request.ItemToString(&ch.Expression)
 		//TODO  邱邱人写文件操作
+		request.SaveToFile(exps, name)
 	})
 	server.router = router
 	return server

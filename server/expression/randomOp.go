@@ -39,7 +39,7 @@ func StartExamine(ch LevelChoose, DIY bool) ExJSON {
 		}
 	}
 	ExpressionGenerate(ch.Level, ch.Max, ch.Nums, &allExpressions, &opers)
-	return GenerateJSONToFront(0, "", allExpressions)
+	return GenerateJSONToFront(allExpressions)
 }
 
 func symbolToOp(op int8) string {
@@ -132,15 +132,6 @@ func GetOperands(times int, max int, operands *[]int) {
 	}
 }
 
-//Operator 获得一个运算符
-//	返回一个string
-func Operator(operators *string) string {
-	//operators := "+-*/"
-	//rand.Seed(time.Now().Unix())
-	rand.New(rand.NewSource(time.Now().UnixNano()))
-	return string((*operators)[rand.Intn(4)])
-}
-
 //OperatorSpecial 自定义题目难度时使用
 //	由前端发回的json中的symbol数组确认str的值
 func OperatorSpecial(str *string) string {
@@ -149,10 +140,19 @@ func OperatorSpecial(str *string) string {
 	return string((*str)[rand.Intn(4)])
 }
 
-//GetOperators 生成运算符
+//GetOperators 生成运算符切片
 func GetOperators(times int, operands *[]string, ops *string) {
 	//var operands []string
 	for ; times > 0; times-- {
 		*operands = append(*operands, OperatorSpecial(ops))
 	}
+}
+
+//Operator 获得一个运算符 废弃
+//	返回一个string
+func Operator(operators *string) string {
+	//operators := "+-*/"
+	//rand.Seed(time.Now().Unix())
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+	return string((*operators)[rand.Intn(4)])
 }
