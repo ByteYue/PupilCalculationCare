@@ -25,7 +25,7 @@ type LevelChoose struct {
 
 //StartExamine 首字母大写，则可以被其他的包访问；如果首字母小写，则只能在本包中使用
 //StartExamine
-func StartExamine(ch LevelChoose, DIY bool) map[string]interface{} {
+func StartExamine(ch LevelChoose, DIY bool) ExJSON {
 	allExpressions := make([]Ex, 0)
 	var opers string
 	if DIY == false {
@@ -36,7 +36,7 @@ func StartExamine(ch LevelChoose, DIY bool) map[string]interface{} {
 		}
 	}
 	ExpressionGenerate(ch.Level, ch.Max, ch.Nums, &allExpressions, &opers)
-	return GenerateWholeJSONExpression(0, "", allExpressions)
+	return GenerateJSONToFront(0, "", allExpressions)
 }
 
 func symbolToOp(op int8) string {

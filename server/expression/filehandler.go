@@ -6,6 +6,11 @@ type ExGroup struct {
 	ID  int `json:"id"`
 }
 
+//ExJSON 对应一维数组名
+type ExJSON struct {
+	Expressions []Ex `json:"expressions"`
+}
+
 //func Fileprocess() bool {
 //
 //}
@@ -14,8 +19,16 @@ type ExGroup struct {
 //	var name string//准备用用户名和第几次使用生成文件名
 //}
 
+//GenerateJSONToFront 生成运算式的json给前端
+func GenerateJSONToFront(times int, name string, allExpression []Ex) ExJSON {
+	var transdata ExJSON
+	transdata.Expressions = allExpression
+	return transdata
+}
+
 //GenerateWholeJSONExpression 将运算式生成json数据
 //times:用户第几次使用,name:用户名 用户一同生成文件名
+//abondoned now, 生成的JSON太丑
 func GenerateWholeJSONExpression(times int, name string, allExpression []Ex) map[string]interface{} {
 	js := make(map[string]interface{})
 	jsons := make([]interface{}, 0)
