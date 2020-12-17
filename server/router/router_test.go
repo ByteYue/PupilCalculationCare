@@ -12,9 +12,9 @@ import (
 
 func TestGinSentMessage(t *testing.T) {
 	examlevel := expression.LevelChoose{
-		Level: 4,
-		Max:   20,
-		Nums:  10,
+		Dnum:   4,
+		Dsize:  20,
+		Puznum: 10,
 	}
 	msg := expression.StartExamine(examlevel, false)
 	r := gin.Default()
