@@ -102,7 +102,7 @@ export default {
       sec: 0,
       //练习题数据
       testData: [],
-      expressions: [
+      tmptestData: [
         {
           id: 1,
           Expression: "2+8+8+20",
@@ -176,7 +176,7 @@ export default {
       ],
     };
   },
-  created() {
+  mounted(){
     this.start();
     this.timerStart();
   },
@@ -261,9 +261,11 @@ export default {
         if (res.status !== 200)
           return this.$message.error("获取题目数据时出现错误!");
         this.testData = res.data.expressions;
-        console.log(testData);
+
       });
       //渲染表格
+      console.log("test data");
+      console.log(this.testData);
     },
     compareAnswer(index) {
       console.log("compare Answer");

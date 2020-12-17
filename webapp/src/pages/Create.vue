@@ -158,15 +158,15 @@
           <el-col :span="12">
             <el-row>
               <el-col :span="20">
-                <el-form-item label="出现符号:" prop="symbols">
+                <el-form-item label="出现符号:" prop="symbol">
                   <el-checkbox-group
-                    v-model="createTestFormData.symbols"
+                    v-model="createTestFormData.symbol"
                     :min="1"
                     :max="4"
                     size="medium"
                   >
                     <el-checkbox
-                      v-for="(item, index) in symbolsOptions"
+                      v-for="(item, index) in symbolOptions"
                       :key="index"
                       :label="item.value"
                       :disabled="item.disabled"
@@ -449,7 +449,7 @@ export default {
       ],
       //测试卷卷表单数据
       createTestFormData: {
-        symbols: [1],
+        symbol: [1],
         dnum: 2,
         dsize: 10,
         puznum: 10,
@@ -458,7 +458,7 @@ export default {
         testname: "测试卷",
       },
       createTestRules: {
-        symbols: [
+        symbol: [
           {
             required: true,
             type: "array",
@@ -509,7 +509,7 @@ export default {
           },
         ],
       },
-      symbolsOptions: [
+      symbolOptions: [
         {
           label: "+",
           value: 1,
