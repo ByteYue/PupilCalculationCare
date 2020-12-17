@@ -139,17 +139,23 @@ export default {
     Login() {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        //提交表单,这里需要http
-        //const result = this.$http.post("/create", this.loginForm);
-        //console.log(result);
-        const { data: res } = await this.$http.post("/login", this.loginForm);
+
+        /*const result = this.$http.post(
+          "/login",
+          this.$qs.stringify(this.loginForm)
+        );
+        console.log(result);*/
+        const res = await this.$http.post(
+          "/login",
+          this.$qs.stringify(this.loginForm)
+        );
         console.log(res);
 
-        if (res.meta.status !== 200) return alert("登录失败！");
+        if (res.status !== 200) return alert("登录失败！");
         this.$message.success("登陆成功！");
 
         //保存token和owner
-        window.sessionStorage.setItem("token", res.data.token);
+        //window.sessionStorage.setItem("token", res.data.token);
         window.sessionStorage.setItem("owner", this.loginForm.owner);
         //页面跳转
         this.$router.push("/create");

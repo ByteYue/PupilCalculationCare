@@ -632,11 +632,11 @@ export default {
       this.$refs.createPracticeFormRef.validate(async (valid) => {
         if (!valid) return;
         //提交表单,这里需要http
-        const { data: res } = await this.$http.post(
+        const res = await this.$http.post(
           "/practice",
-          this.createPracticeFormData
+          this.$qs.stringify(this.createPracticeFormData)
         );
-        if (res.meta.status !== 200) return alert("生成错误！");
+        if (res.status !== 200) return alert("生成错误！");
 
         this.$message.success("生成练习题...");
         console.log(res);
@@ -648,11 +648,11 @@ export default {
       this.$refs.createTestFormRef.validate(async (valid) => {
         if (!valid) return;
         //提交表单,这里需要http
-        const { data: res } = await this.$http.post(
+        const res = await this.$http.post(
           "/test",
-          this.createTestFormData
+          this.$qs.stringify(this.createTestFormData)
         );
-        if (res.meta.status !== 200) return alert("生成错误！");
+        if (res.status !== 200) return alert("生成错误！");
         //弹出信息
         this.$message.success("生成测试题...");
         window.sessionStorage.setItem(
