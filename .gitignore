@@ -8,7 +8,7 @@
 *.out
 my-app
 go.sum
-
+app.env
 webapp/node_modules
 webapp/npm-debug.log*
 test/json

@@ -19,11 +19,11 @@ type Ex struct {
 //	TODO 加上   symbol:符号(1:+ 2:- 3:* 4:/)	anssize:答案范围
 //	前端传回的数据
 type LevelChoose struct {
-	Symbol  []int8 `json:"symbols"`
-	Level   int    `json:"level"`
-	Max     int    `json:"max"`
-	Nums    int    `json:"nums"`
-	Anssize int    `json:"anssize"`
+	Symbol  []int8 `form:"symbol"`
+	Dnum    int    `form:"dnum"`
+	Dsize   int    `form:"dsize"`
+	Puznum  int    `form:"puznum"`
+	Anssize int    `form:"anssize"`
 }
 
 //StartExamine 首字母大写，则可以被其他的包访问；如果首字母小写，则只能在本包中使用
@@ -34,14 +34,51 @@ func StartExamine(ch LevelChoose, DIY bool) ExJSON {
 	if DIY == false {
 		opers = "+-*/"
 	} else {
+		//opers = GetOps(ch.Symbol)
 		for _, elem := range ch.Symbol {
 			opers += symbolToOp(elem)
 		}
 	}
-	ExpressionGenerate(ch.Level, ch.Max, ch.Nums, &allExpressions, &opers)
+	ExpressionGenerate(ch.Dnum, ch.Dsize, ch.Puznum, &allExpressions, &opers)
 	return GenerateJSONToFront(allExpressions)
 }
 
+//GetOps 获得操作符数组
+func GetOps(symbol int) string {
+	switch symbol {
+	case 1:
+		return "/"
+	case 10:
+		return "*"
+	case 11:
+		return "*/"
+	case 100:
+		return "-"
+	case 101:
+		return "-/"
+	case 110:
+		return "-*"
+	case 111:
+		return "-*/"
+	case 1000:
+		return "+"
+	case 1001:
+		return "+/"
+	case 1010:
+		return "+*"
+	case 1011:
+		return "+*/"
+	case 1100:
+		return "+-"
+	case 1101:
+		return "+-/"
+	case 1110:
+		return "+-*"
+	case 1111:
+		return "+-*/"
+	}
+	return ""
+}
 func symbolToOp(op int8) string {
 	if op == 1 {
 		return "+"
@@ -137,7 +174,7 @@ func GetOperands(times int, max int, operands *[]int) {
 func OperatorSpecial(str *string) string {
 	//rand.Seed(time.Now().Unix())
 	rand.New(rand.NewSource(time.Now().UnixNano()))
-	return string((*str)[rand.Intn(4)])
+	return string((*str)[rand.Intn(len(*str))])
 }
 
 //GetOperators 生成运算符切片

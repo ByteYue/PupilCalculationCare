@@ -3,6 +3,7 @@ package expression
 import (
 	"log"
 	request "my-app/model/request"
+	"strconv"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -15,8 +16,8 @@ func TestCommitTrans(t *testing.T) {
 		if c.ShouldBindJSON(&datafromfront) == nil {
 			log.Println(datafromfront.Expression)
 			log.Println(datafromfront.Owner)
-			c.JSON(200,gin.H{
-				"status":"GOT",
+			c.JSON(200, gin.H{
+				"status": "GOT",
 			})
 		}
 		log.Println("Done")
@@ -29,13 +30,13 @@ func TestGenerateJSONToFront(t *testing.T) {
 	allExpressions := make([]Ex, 0)
 	opers := "+-*/"
 	ch := LevelChoose{
-		Symbol:  []int8{1, 2},
-		Level:   4,
-		Max:     20,
-		Nums:    10,
+		//Symbol:  1111,
+		Dnum:    4,
+		Dsize:   20,
+		Puznum:  10,
 		Anssize: 10,
 	}
-	ExpressionGenerate(ch.Level, ch.Max, ch.Nums, &allExpressions, &opers)
+	ExpressionGenerate(ch.Dnum, ch.Dsize, ch.Puznum, &allExpressions, &opers)
 	transdata.Expressions = allExpressions
 	r := gin.Default()
 	r.GET("/see", func(c *gin.Context) {
@@ -46,28 +47,38 @@ func TestGenerateJSONToFront(t *testing.T) {
 
 func TestExp(t *testing.T) {
 	examlevel := LevelChoose{
-		Symbol:  []int8{1, 2},
-		Level:   4,
-		Max:     20,
-		Nums:    10,
+		//Symbol:  1111,
+		Dnum:    4,
+		Dsize:   20,
+		Puznum:  10,
 		Anssize: 10,
 	}
-	StartExamine(examlevel, false)
-
+	msg := StartExamine(examlevel, false)
+	log.Println(msg)
 }
 func TestGinSentMessage(t *testing.T) {
-	examlevel := LevelChoose{
-		Symbol:  []int8{1, 2},
-		Level:   4,
-		Max:     20,
-		Nums:    10,
-		Anssize: 10,
-	}
-	msg := StartExamine(examlevel, true)
+	//var examlevel LevelChoose
 	r := gin.Default()
-	//var message map[string]interface{}
-	r.GET("/", func(c *gin.Context) {
-		//json.Unmarshal(msg, &message)
+	r.POST("/", func(c *gin.Context) {
+		var ch LevelChoose
+		symbol := c.PostFormMap("symbol")
+		level := c.PostForm("level")
+		max := c.PostForm("max")
+		nums := c.PostForm("nums")
+		anssize := c.PostForm("anssize")
+		log.Println(symbol)
+		log.Println(level)
+		ch.Dnum, _ = strconv.Atoi(level)
+		ch.Dsize, _ = strconv.Atoi(max)
+		ch.Puznum, _ = strconv.Atoi(nums)
+		ch.Anssize, _ = strconv.Atoi(anssize)
+		for key, elem := range symbol {
+			temp, _ := strconv.Atoi(elem)
+			i, _ := strconv.Atoi(key)
+			ch.Symbol[i] = int8(temp)
+		}
+		log.Println(ch)
+		msg := StartExamine(ch, true)
 		c.JSON(200, msg)
 		c.JSON(200, gin.H{
 			"status": "ok",
