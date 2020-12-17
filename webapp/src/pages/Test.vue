@@ -249,8 +249,8 @@ export default {
     },
     async start() {
       //用get获取数据
-      const { data: res } = await this.$http.get("expressions");
-      if (res.meta.status !== 200)
+      const res = await this.$http.get("/test", this.expressions);
+      if (res.status !== 200)
         return this.$message.error("获取题目数据时出现错误!");
       this.expressions = res.data;
       console.log(res);
