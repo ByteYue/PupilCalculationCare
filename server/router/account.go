@@ -61,10 +61,7 @@ func (server *Server) LogIn(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	if account.Password != req.Password {
-		ctx.JSON(http.StatusBadRequest, nil)
-		return
-	}
+
 	ctx.JSON(http.StatusOK, account)
 }
 
@@ -100,7 +97,10 @@ func (server *Server) Register(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-
+	if account.Password != req.Password {
+		ctx.JSON(http.StatusBadRequest, nil)
+		return
+	}
 	ctx.JSON(http.StatusOK, account)
 }
 
