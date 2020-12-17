@@ -17,7 +17,7 @@
       <div class="pheader">
         <div class="timer">{{ min }}:{{ sec }}</div>
         <div class="testname">
-          <div id="testName">测试卷</div>
+          测试卷
         </div>
       </div>
       <div class="puzzles">
@@ -96,8 +96,9 @@ export default {
     return {
       show: false,
       lastPoint: 100,
-      end: undefined,
-      now: undefined,
+      testName:'',
+      end: '',
+      now: '',
       min: 5,
       sec: 0,
       //练习题数据
@@ -182,7 +183,8 @@ export default {
   },
   methods: {
     timerStart() {
-      //*this.min = JSON.parse(sessionStorage.getItem("testtime"));
+      this.min = JSON.parse(sessionStorage.getItem("testtime"));
+      this.testName = JSON.parse(sessionStorage.getItem("testname"));
       // 当前时间戳
       this.now = Date.parse(new Date());
       // 目标日期时间戳

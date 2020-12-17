@@ -151,7 +151,7 @@ export default {
         );
         console.log(res);
 
-        if (res.status !== 200) return alert("登录失败！");
+        if (res.status !== 200) {this.$message.error("登陆失败.."); return;}
         this.$message.success("登陆成功！");
 
         //保存token和owner
