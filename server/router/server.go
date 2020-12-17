@@ -30,6 +30,7 @@ func NewServer(queries *db.Queries) *Server {
 	//router.Use(middleware())
 
 	router.POST("/login", server.Register)
+	router.POST("/practice", PracticeDIY)
 	router.GET("/practice", PracticeGenerate)
 	router.GET("/test", PracticeGenerate)
 	router.POST("/create", PracticeDIY)

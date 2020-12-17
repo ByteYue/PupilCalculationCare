@@ -40,8 +40,8 @@ func (server *Server) CreateAccount(ctx *gin.Context) {
 
 //getAccountRequest JSON
 type getAccountRequest struct {
-	Owner    string `json:"owner" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Owner    string `form:"owner"`
+	Password string `form:"password"`
 }
 
 //LogIn handle login
@@ -71,7 +71,7 @@ func (server *Server) LogIn(ctx *gin.Context) {
 //Register handle register
 func (server *Server) Register(ctx *gin.Context) {
 	var req getAccountRequest
-	if err := ctx.ShouldBindJSON(&req); err != nil {
+	if err := ctx.Bind(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
