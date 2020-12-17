@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="puzzles">
-        <el-table :data="expressions" style="width: 100%">
+        <el-table :data="testData" style="width: 100%">
           <el-table-column prop="id" width="200" align="right" label="序号">
             <template slot-scope="scope">
               <span v-if="scope.row.id">{{ scope.row.id }}</span>
@@ -101,7 +101,7 @@ export default {
       min: 5,
       sec: 0,
       //练习题数据
-
+      testData: [],
       expressions: [
         {
           id: 1,
@@ -223,11 +223,11 @@ export default {
     submitAnswer() {
       //提交练习
       //this.$router.push("/commit");
-      var tablelength = this.expressions.length;
+      var tablelength = this.testData.length;
       var rightNum = 0;
       for (var i = 0; i < tablelength; i++) {
         this.compareAnswer(i);
-        if (this.expressions[i].Judge === "√") rightNum++;
+        if (this.testData[i].Judge === "√") rightNum++;
       }
       this.lastPoint = (this.lastPoint * rightNum) / tablelength;
       //展现成绩单
@@ -236,7 +236,7 @@ export default {
       this.$http({
         url: "/commit",
         method: "post",
-        data: this.expressions,
+        data: this.testData,
       }).then((res) => {
         console.log(res.data);
         if (res.meta.status !== 200) return alert("提交数据错误！");
@@ -247,30 +247,38 @@ export default {
     ColShow() {
       this.show = true;
     },
-    async start() {
+    start() {
+      //async start() {
       //用get获取数据
-      const res = await this.$http.get("/test", this.expressions);
+      /*const res = await this.$http.get("/test");
       if (res.status !== 200)
         return this.$message.error("获取题目数据时出现错误!");
-      this.expressions = res.data;
       console.log(res);
+      //放入practiceData
+      this.testData = res.data;*/
+      this.$http.get("/test").then((res) => {
+        console.log(res);
+        if (res.status !== 200)
+          return this.$message.error("获取题目数据时出现错误!");
+        this.testData = res.data.expressions;
+        console.log(testData);
+      });
       //渲染表格
-      console.log(this.expressions);
     },
     compareAnswer(index) {
       console.log("compare Answer");
-      var tablelength = this.expressions.length;
-      let tmpobj = this.expressions[index];
+      var tablelength = this.testData.length;
+      let tmpobj = this.testData[index];
       let ans = tmpobj.Answer;
       let res = tmpobj.Input;
       if (ans === res) {
         tmpobj.Judge = "√";
         tmpobj.Point = (100 / tablelength).toFixed(1);
-        this.$set(this.expressions, index, tmpobj);
+        this.$set(this.testData, index, tmpobj);
       } else {
         tmpobj.Judge = "×";
         tmpobj.Point = 0;
-        this.$set(this.expressions, index, tmpobj);
+        this.$set(this.testData, index, tmpobj);
       }
     },
   },

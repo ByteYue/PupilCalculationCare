@@ -641,6 +641,7 @@ export default {
         this.$message.success("生成练习题...");
         console.log(res);
         //页面跳转
+
         this.$router.push("/practice");
       });
     },
@@ -655,6 +656,7 @@ export default {
         if (res.status !== 200) return alert("生成错误！");
         //弹出信息
         this.$message.success("生成测试题...");
+        console.log(res);
         window.sessionStorage.setItem(
           "testtime",
           this.createTestFormData.testtime

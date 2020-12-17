@@ -18,7 +18,7 @@
         <div class="testname">练习题</div>
       </div>
       <div class="puzzles">
-        <el-table :data="expressions" style="width: 100%">
+        <el-table :data="practiceData" style="width: 100%">
           <el-table-column prop="id" width="200" align="right" label="序号">
             <template slot-scope="scope">
               <span v-if="scope.row.id">{{ scope.row.id }}</span>
@@ -81,8 +81,8 @@ export default {
       show: false,
       lastPoint: 100,
       //练习题数据
-
-      expressions: [
+      practiceData: [],
+      tmppracticeData: [
         {
           id: 1,
           Expression: "2+8+8+20",
@@ -156,7 +156,7 @@ export default {
       ],
     };
   },
-  created() {
+  mounted() {
     this.start();
   },
   methods: {
@@ -171,11 +171,11 @@ export default {
     submitAnswer() {
       //提交练习
       //this.$router.push("/commit");
-      var tablelength = this.expressions.length;
+      var tablelength = this.practiceData.length;
       var rightNum = 0;
       for (var i = 0; i < tablelength; i++) {
         this.compareAnswer(i);
-        if (this.expressions[i].Judge === "√") rightNum++;
+        if (this.practiceData[i].Judge === "√") rightNum++;
       }
       this.lastPoint = (this.lastPoint * rightNum) / tablelength;
       //展现结果
@@ -184,7 +184,7 @@ export default {
       this.$http({
         url: "/commit",
         method: "post",
-        data: this.expressions,
+        data: this.practiceData,
       }).then((res) => {
         console.log(res.data);
         if (res.meta.status !== 200) return alert("提交数据错误！");
@@ -195,30 +195,39 @@ export default {
     ColShow() {
       this.show = true;
     },
-    async start() {
+    start() {
+      //async start() {
       //用get获取数据
-      const res = await this.$http.get("/practice", this.expressions);
+      /*const res = await this.$http.get("/practice");
       if (res.status !== 200)
         return this.$message.error("获取题目数据时出现错误!");
-      this.expressions = res.data;
       console.log(res);
+      //放入practiceData
+      this.expressions = res.data;*/
+      this.$http.get("/practice").then((res) => {
+        console.log(res);
+        if (res.status !== 200)
+          return this.$message.error("获取题目数据时出现错误!");
+        this.practiceData = res.data.expressions;
+      });
       //渲染表格
-      console.log(this.expressions);
+      consol.log("practice data");
+      console.log(this.practiceData);
     },
     compareAnswer(index) {
       console.log("compare Answer");
-      var tablelength = this.expressions.length;
-      let tmpobj = this.expressions[index];
+      var tablelength = this.practiceData.length;
+      let tmpobj = this.practiceData[index];
       let ans = tmpobj.Answer;
       let res = tmpobj.Input;
       if (ans === res) {
         tmpobj.Judge = "√";
         tmpobj.Point = (100 / tablelength).toFixed(1);
-        this.$set(this.expressions, index, tmpobj);
+        this.$set(this.practiceData, index, tmpobj);
       } else {
         tmpobj.Judge = "×";
         tmpobj.Point = 0;
-        this.$set(this.expressions, index, tmpobj);
+        this.$set(this.practiceData, index, tmpobj);
       }
     },
   },
