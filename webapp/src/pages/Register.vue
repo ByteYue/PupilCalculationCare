@@ -147,7 +147,7 @@ export default {
         console.log(res);
 
         if (res.status !== 200) {
-          this.$message.error("注册失败了..");
+          this.$message.error("注册失败了，账号已有..");
           this.resetLoginForm();
           return;
         }

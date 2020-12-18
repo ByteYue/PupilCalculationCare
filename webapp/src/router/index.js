@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login.vue'
+import Register from '@/pages/Register.vue'
 import Create from '@/pages/Create.vue'
 import Test from '@/pages/Test.vue'
 import Practice from '@/pages/Practice.vue'
@@ -15,6 +16,13 @@ export default new Router({
       path: '/',
       redirect: '/login'
     },
+
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+
     {
       path: '/login',
       name: 'login',
