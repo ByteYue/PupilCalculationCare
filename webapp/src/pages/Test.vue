@@ -16,9 +16,7 @@
     <el-main class="main">
       <div class="pheader">
         <div class="timer">{{ min }}:{{ sec }}</div>
-        <div class="testname">
-          测试卷
-        </div>
+        <div class="testname">测试卷</div>
       </div>
       <div class="puzzles">
         <el-table :data="testData" style="width: 100%">
@@ -96,9 +94,8 @@ export default {
     return {
       show: false,
       lastPoint: 100,
-      testName:'',
-      end: '',
-      now: '',
+      end: "",
+      now: "",
       min: 5,
       sec: 0,
       //练习题数据
@@ -177,14 +174,14 @@ export default {
       ],
     };
   },
-  mounted(){
+  mounted() {
     this.start();
     this.timerStart();
   },
   methods: {
     timerStart() {
       this.min = JSON.parse(sessionStorage.getItem("testtime"));
-      this.testName = JSON.parse(sessionStorage.getItem("testname"));
+      //this.testName = JSON.parse(sessionStorage.getItem("testname"));
       // 当前时间戳
       this.now = Date.parse(new Date());
       // 目标日期时间戳
@@ -231,15 +228,11 @@ export default {
         this.compareAnswer(i);
         if (this.testData[i].Judge === "√") rightNum++;
       }
-      this.lastPoint = (this.lastPoint * rightNum) / tablelength;
+      this.lastPoint = ((this.lastPoint * rightNum) / tablelength).toFixed(1);
       //展现成绩单
       this.ColShow();
       //传送数据
-      this.$http({
-        url: "/commit",
-        method: "post",
-        data: this.testData,
-      }).then((res) => {
+      this.$http.post("/commit", this.testData).then((res) => {
         console.log(res.data);
         if (res.meta.status !== 200) return alert("提交数据错误！");
         //弹出信息
@@ -263,7 +256,6 @@ export default {
         if (res.status !== 200)
           return this.$message.error("获取题目数据时出现错误!");
         this.testData = res.data.expressions;
-
       });
       //渲染表格
       console.log("test data");

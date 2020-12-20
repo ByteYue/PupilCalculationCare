@@ -157,7 +157,7 @@
         >
           <el-col :span="12">
             <el-row>
-              <el-col :span="20">
+              <el-col :span="24">
                 <el-form-item label="出现符号:" prop="symbol">
                   <el-checkbox-group
                     v-model="createTestFormData.symbol"
@@ -697,19 +697,19 @@ export default {
 .formBox .form1 {
   position: absolute;
   margin-top: 5%;
-  margin-left: 15%;
+  margin-left: 5%;
   width: 45%;
 }
 
 .formBox .form2 {
   position: absolute;
   margin-top: 5%;
-  margin-left: 60%;
+  margin-left: 50%;
   width: 45%;
 }
 
 .formBox button {
-  width: 53%;
+  width: 52%;
   cursor: pointer;
 }
 </style>

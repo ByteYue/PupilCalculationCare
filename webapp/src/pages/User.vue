@@ -1,11 +1,7 @@
 <template>
   <div class="practicePage">
     <el-header class="header">
-      <el-popconfirm
-        icon="el-icon-info"
-        @confirm="backToCreate()"
-        title="注意：返回主页后会清空当前进度！"
-      >
+      <el-popconfirm icon="el-icon-info" @click="backToCreate()">
         <el-button slot="reference">返回主页</el-button>
       </el-popconfirm>
       <div class="user">
